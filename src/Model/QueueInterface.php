@@ -7,7 +7,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use \Exception;
-use Inwebo\QueueCommand\Model\ArrayInput;
 
 interface QueueInterface extends HookInterface
 {
@@ -39,16 +38,20 @@ interface QueueInterface extends HookInterface
      */
     public function configureQueue(): void;
     /**
-     * @param Command         $cmd
-     * @param InputInterface  $input
+     * @param QueueCommand $cmd
+     * @param ArrayInput $input
      * @param OutputInterface $output
      * @return void
-     * @throws Exception When binding input fails. Bypass this by calling {@link ignoreValidationErrors()}.
+     * @throws \Exception
      */
-    public function runCommand(Command $cmd, InputInterface $input, OutputInterface $output): void;
+    public function runCommand(QueueCommand $cmd, ArrayInput $input, OutputInterface $output): void;
     /**
      * InputInterface courante de la file d'attente.
-     * @return InputInterface
+     * @return ?ArrayInput
      */
     public function getInput(): ?ArrayInput;
+
+    public function setInput(ArrayInput $input): void;
+
+    public function enqueue(string $defaultName): void;
 }

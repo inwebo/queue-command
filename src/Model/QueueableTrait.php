@@ -46,6 +46,30 @@ trait QueueableTrait
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getInput(): ?ArrayInput
+    {
+        return $this->input;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setInput(ArrayInput $input): void
+    {
+        $this->input = $input;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function enqueue(string $defaultName): void
+    {
+        $this->getQueueCommandNames()->enqueue($defaultName);
+    }
+
+    /**
      * @param Application       $app
      * @param \SplQueue<string> $queueCommandNames
      * @param QueueCommand|null $queueCommand
@@ -56,32 +80,16 @@ trait QueueableTrait
     {
         while ($queueCommandNames->valid())
         {
-            $current = $queueCommandNames->current();
             /** @var QueueCommand $cmd */
             $cmd = $app->find($queueCommandNames->current());
 
             $this->getQueue()->enqueue($cmd);
 
-            if (!$cmd->getQueueCommandNames()->isEmpty()) {
+            if (false === $cmd->getQueueCommandNames()->isEmpty()) {
                 $this->queueCommandFactory($app, $cmd->getQueueCommandNames(), $cmd);
             }
 
             $queueCommandNames->next();
         }
-    }
-
-    public function setInput(ArrayInput $input): void
-    {
-        $this->input = $input;
-    }
-
-    public function enqueue(string $defaultName): void
-    {
-        $this->getQueueCommandNames()->enqueue($defaultName);
-    }
-
-    public function getInput(): ?ArrayInput
-    {
-        return $this->input;
     }
 }

@@ -6,13 +6,17 @@ use Inwebo\QueueCommand\QueueCommand;
 
 class Queue extends \SplQueue implements \RecursiveIterator
 {
+    /**
+     * @param QueueCommand $value
+     * @return void
+     * @throws \Exception
+     */
     public function enqueue(mixed $value): void
     {
         if ($value instanceof QueueCommand) {
             parent::enqueue($value);
         } else {
-            // @todo Ajout du nom de class ayant appellé la mtéhode static Command::configure
-            throw new \Exception(sprintf('$value must be an instance of Inwebo\QueueCommand\QueueCommand'));
+            throw new \Exception(sprintf('$value must be an instance of %s', 'Inwebo\QueueCommand\QueueCommand'));
         }
     }
 

@@ -10,7 +10,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class FinallyEvent extends HookEvent
 {
-    public const NAME = 'command.output';
+    public const NAME = 'command.hook.finally';
 
     protected SymfonyStyle $style;
 

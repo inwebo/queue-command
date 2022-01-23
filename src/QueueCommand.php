@@ -2,8 +2,8 @@
 
 namespace Inwebo\QueueCommand;
 
-use Inwebo\QueueCommand\Event\InEvent;
-use Inwebo\QueueCommand\Event\OutEvent;
+use Inwebo\QueueCommand\Event\BeforeEvent;
+use Inwebo\QueueCommand\Event\AfterEvent;
 use Inwebo\QueueCommand\Event\FinallyEvent;
 use Inwebo\QueueCommand\Event\ThrowExceptionEvent;
 use Inwebo\QueueCommand\EventSubscriber\HookSubscriber;
@@ -65,7 +65,7 @@ abstract class QueueCommand extends Command implements HookInterface, QueueInter
     /**
      * {@inheritdoc}
      */
-    public function runCommand(Command $cmd, InputInterface $input, OutputInterface $output): void
+    public function runCommand(QueueCommand $cmd, InputInterface $input, OutputInterface $output): void
     {
         $cmd->setInput($input);
         $cmd->run($input, $output);
@@ -96,11 +96,11 @@ abstract class QueueCommand extends Command implements HookInterface, QueueInter
         // Configuration des hooks courants.
         // ...
         $this->onBefore(function (InputInterface $input, OutputInterface $output, QueueCommand $cmd) {
-            $this->getEventDispatcher()->dispatch(new InEvent($input, $output, $cmd));
+            $this->getEventDispatcher()->dispatch(new BeforeEvent($input, $output, $cmd));
         });
 
         $this->onAfter(function (InputInterface $input, OutputInterface $output, QueueCommand $cmd) {
-            $this->getEventDispatcher()->dispatch(new OutEvent($input, $output, $cmd));
+            $this->getEventDispatcher()->dispatch(new AfterEvent($input, $output, $cmd));
         });
 
         $this->onThrowException(function (InputInterface $input, OutputInterface $output, QueueCommand $cmd, \Exception $e) {

@@ -21,9 +21,9 @@ abstract class QueueIteratorCommand extends QueueCommand implements HookInterfac
     protected static   $defaultName = 'base:queue';
     protected Iterator $queueRecursiveIterator;
 
-    protected function setIterator(Queue $input, int $flags = \RecursiveIteratorIterator::SELF_FIRST): void
+    protected function setIterator(Queue $iterator, int $flags = \RecursiveIteratorIterator::SELF_FIRST): void
     {
-        $this->queueRecursiveIterator = new Iterator($input, $flags);
+        $this->queueRecursiveIterator = new Iterator($iterator, $flags);
     }
 
     public function getIterator(): Iterator
@@ -31,6 +31,12 @@ abstract class QueueIteratorCommand extends QueueCommand implements HookInterfac
         return $this->queueRecursiveIterator;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     * @throws \Exception
+     */
     protected function configureQueueIterator(InputInterface $input, OutputInterface $output): void
     {
         if (false === $this->lock() && $this->isLockable()) {
