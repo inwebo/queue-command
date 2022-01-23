@@ -2,15 +2,13 @@
 
 namespace Inwebo\QueueCommand\Model;
 
-use Inwebo\QueueCommand\Model\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as BaseEventDispatcher;
-
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 trait EventDispatcherTrait
 {
-    protected EventDispatcherInterface|BaseEventDispatcher $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    public function getEventDispatcher(): EventDispatcherInterface|BaseEventDispatcher
+    public function getEventDispatcher(): EventDispatcherInterface
     {
         return $this->eventDispatcher; 
     }

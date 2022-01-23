@@ -13,13 +13,14 @@ use Inwebo\QueueCommand\Model\HookableTrait;
 use Inwebo\QueueCommand\Model\HookInterface;
 use Inwebo\QueueCommand\Model\Queue;
 use Inwebo\QueueCommand\Model\QueueableTrait;
+use Inwebo\QueueCommand\Model\QueueEventDispatcherInterface;
 use Inwebo\QueueCommand\Model\QueueInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-abstract class QueueCommand extends Command implements HookInterface, QueueInterface, EventDispatcherInterface
+abstract class QueueCommand extends Command implements HookInterface, QueueInterface, QueueEventDispatcherInterface
 {
     use QueueableTrait;
     use HookableTrait;

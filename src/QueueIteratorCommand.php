@@ -7,6 +7,7 @@ use Inwebo\QueueCommand\Model\EventDispatcherInterface;
 use Inwebo\QueueCommand\Model\HookInterface;
 use Inwebo\QueueCommand\Model\Iterator;
 use Inwebo\QueueCommand\Model\Queue;
+use Inwebo\QueueCommand\Model\QueueEventDispatcherInterface;
 use Inwebo\QueueCommand\Model\QueueInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
@@ -14,7 +15,7 @@ use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class QueueIteratorCommand extends QueueCommand implements HookInterface, QueueInterface, EventDispatcherInterface
+abstract class QueueIteratorCommand extends QueueCommand implements HookInterface, QueueInterface, QueueEventDispatcherInterface
 {
     use LockableTrait;
 
