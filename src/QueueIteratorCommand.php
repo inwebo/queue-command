@@ -50,6 +50,7 @@ abstract class QueueIteratorCommand extends QueueCommand implements HookInterfac
 
         $this->setIterator($this->getQueue());
     }
+
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -65,16 +66,19 @@ abstract class QueueIteratorCommand extends QueueCommand implements HookInterfac
         while ($this->getIterator()->valid()) {
             try {
                 $this->before()?->__invoke($this->getInput(), $output, $this->getIterator()->current());
+
                 $this->runCommand($this->getIterator()->current(), $this->getInput(), $output);
 
-                if (false === $this->getIterator()->current()->getInput()->isBubbling()) {
-                    $this->getInput()->stopBubbling();
-                }
-                if (false === $this->getIterator()->current()->getInput()->isBubblingArguments()) {
-                    $this->getInput()->stopBubblingArguments();
-                }
-                if (false === $this->getIterator()->current()->getInput()->isBubblingOptions()) {
-                    $this->getInput()->stopBubblingOptions();
+                if (false === is_null($this->getIterator()->current()->getInput())) {
+                    if (false === $this->getIterator()->current()->getInput()->isBubbling()) {
+                        $this->getInput()->stopBubbling();
+                    }
+                    if (false === $this->getIterator()->current()->getInput()->isBubblingArguments()) {
+                        $this->getInput()->stopBubblingArguments();
+                    }
+                    if (false === $this->getIterator()->current()->getInput()->isBubblingOptions()) {
+                        $this->getInput()->stopBubblingOptions();
+                    }
                 }
 
                 $this->getInput()->mergeArguments($this->getIterator()->current()->getInput());

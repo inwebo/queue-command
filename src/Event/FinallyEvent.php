@@ -3,7 +3,6 @@
 namespace Inwebo\QueueCommand\Event;
 
 use Inwebo\QueueCommand\QueueCommand;
-use Inwebo\QueueCommand\QueueIteratorCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;

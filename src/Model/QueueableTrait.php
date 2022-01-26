@@ -3,7 +3,6 @@
 namespace Inwebo\QueueCommand\Model;
 
 use Inwebo\QueueCommand\QueueCommand;
-use Inwebo\QueueCommand\QueueIteratorCommand;
 use Symfony\Component\Console\Application;
 
 trait QueueableTrait

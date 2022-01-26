@@ -10,6 +10,7 @@ interface QueueEventDispatcherInterface
 
     /**
      * Devrait être executée dans Symfony\Component\Console\Command\Command::configure()
+     *
      * @return void
      */
     public function configureEventSubscriber(): void;

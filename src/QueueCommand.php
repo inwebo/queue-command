@@ -8,7 +8,6 @@ use Inwebo\QueueCommand\Event\FinallyEvent;
 use Inwebo\QueueCommand\Event\ThrowExceptionEvent;
 use Inwebo\QueueCommand\EventSubscriber\HookSubscriber;
 use Inwebo\QueueCommand\Model\EventDispatcherTrait;
-use Inwebo\QueueCommand\Model\EventDispatcherInterface;
 use Inwebo\QueueCommand\Model\HookableTrait;
 use Inwebo\QueueCommand\Model\HookInterface;
 use Inwebo\QueueCommand\Model\Queue;
@@ -78,13 +77,9 @@ abstract class QueueCommand extends Command implements HookInterface, QueueInter
     public function configureQueue(): void
     {
         // ...
-        // Configuration de la file d'attente. FIFO
+        // FIFO
         // ...
-        // Exemple fictif
         // $this->getQueue()->enqueue($this->getApplication()->find(QueueCommand::getDefaultName()));
-        /**
-         * Devrait être appelé systématiquement dans tous les enfants.
-         */
         $this->getQueueCommandNames()->rewind();
     }
 
@@ -93,9 +88,6 @@ abstract class QueueCommand extends Command implements HookInterface, QueueInter
      */
     public function configureHooks(): void
     {
-        // ...
-        // Configuration des hooks courants.
-        // ...
         $this->onBefore(function (InputInterface $input, OutputInterface $output, QueueCommand $cmd) {
             $this->getEventDispatcher()->dispatch(new BeforeEvent($input, $output, $cmd));
         });
@@ -118,9 +110,6 @@ abstract class QueueCommand extends Command implements HookInterface, QueueInter
      */
     public function configureEventSubscriber(): void
     {
-        // ...
-        // Ajout de nouveaux subscribers
-        // ...
         $this->getEventDispatcher()->addSubscriber(new HookSubscriber());
     }
 }

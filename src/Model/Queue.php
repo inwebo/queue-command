@@ -16,7 +16,7 @@ class Queue extends \SplQueue implements \RecursiveIterator
         if ($value instanceof QueueCommand) {
             parent::enqueue($value);
         } else {
-            throw new \Exception(sprintf('$value must be an instance of %s', 'Inwebo\QueueCommand\QueueCommand'));
+            throw new \Exception(sprintf('$value must be an instance of %s', QueueCommand::class));
         }
     }
 
