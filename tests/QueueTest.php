@@ -1,5 +1,7 @@
 <?php
 
+namespace Inwebo\QueueCommand\Tests;
+
 use PHPUnit\Framework\TestCase;
 
 class QueueTest extends TestCase

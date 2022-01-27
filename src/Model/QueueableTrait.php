@@ -7,10 +7,10 @@ use Symfony\Component\Console\Application;
 
 trait QueueableTrait
 {
-    protected bool       $lockable = false;
-    protected \SplQueue  $commandNames;
-    protected Queue      $queue;
-    protected ?ArrayInput $input   = null;
+    protected bool        $lockable = false;
+    protected \SplQueue   $commandNames;
+    protected Queue       $queue;
+    protected ?ArrayInput $input    = null;
 
     /**
      * {@inheritdoc}
@@ -75,7 +75,7 @@ trait QueueableTrait
      * @return void
      * @throws \Exception
      */
-    protected function queueCommandFactory(Application $app, \SplQueue $queueCommandNames, ?QueueCommand $queueCommand = null): void
+    protected function commandFactory(Application $app, \SplQueue $queueCommandNames, ?QueueCommand $queueCommand = null): void
     {
         while ($queueCommandNames->valid())
         {
@@ -85,7 +85,7 @@ trait QueueableTrait
             $this->getQueue()->enqueue($cmd);
 
             if (false === $cmd->getQueueCommandNames()->isEmpty()) {
-                $this->queueCommandFactory($app, $cmd->getQueueCommandNames(), $cmd);
+                $this->commandFactory($app, $cmd->getQueueCommandNames(), $cmd);
             }
 
             $queueCommandNames->next();

@@ -3,19 +3,22 @@
 namespace Inwebo\QueueCommand;
 
 use Inwebo\QueueCommand\Model\ArrayInput;
-use Inwebo\QueueCommand\Model\EventDispatcherInterface;
 use Inwebo\QueueCommand\Model\HookInterface;
 use Inwebo\QueueCommand\Model\Iterator;
 use Inwebo\QueueCommand\Model\Queue;
 use Inwebo\QueueCommand\Model\QueueEventDispatcherInterface;
 use Inwebo\QueueCommand\Model\QueueInterface;
-use Symfony\Component\Console\Application;
+use Inwebo\QueueCommand\Model\QueueIteratorInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class QueueIteratorCommand extends QueueCommand implements HookInterface, QueueInterface, QueueEventDispatcherInterface
+abstract class QueueIteratorCommand extends QueueCommand implements
+    QueueIteratorInterface,             // Mandatory Interface, $this is a concrete QueueIteratorInterface implementation
+    HookInterface,                      // Helper implements, already used in abstract Inwebo\QueueCommand\QueueCommand
+    QueueInterface,                     // Helper implements, already used in abstract Inwebo\QueueCommand\QueueCommand
+    QueueEventDispatcherInterface       // Helper implements, already used in abstract Inwebo\QueueCommand\QueueCommand
 {
     use LockableTrait;
 
@@ -44,9 +47,7 @@ abstract class QueueIteratorCommand extends QueueCommand implements HookInterfac
             throw new \Exception();
         }
 
-        $this->queueCommandFactory($this->getApplication(), $this->getQueueCommandNames());
-
-        $this->setInput(ArrayInput::create($input));
+        $this->commandFactory($this->getApplication(), $this->getQueueCommandNames());
 
         $this->setIterator($this->getQueue());
     }
@@ -59,6 +60,7 @@ abstract class QueueIteratorCommand extends QueueCommand implements HookInterfac
      */
     final protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->setInput(ArrayInput::create($input));
         $this->configureQueueIterator($input, $output);
 
         $this->getIterator()->rewind();
