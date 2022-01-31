@@ -15,6 +15,7 @@ use Inwebo\QueueCommand\Model\QueueableTrait;
 use Inwebo\QueueCommand\Model\QueueEventDispatcherInterface;
 use Inwebo\QueueCommand\Model\QueueInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -24,6 +25,7 @@ abstract class QueueCommand extends Command implements HookInterface, QueueInter
     use QueueableTrait;
     use HookableTrait;
     use EventDispatcherTrait;
+    use LockableTrait;
 
     protected static $defaultName = 'queue';
 
@@ -67,6 +69,10 @@ abstract class QueueCommand extends Command implements HookInterface, QueueInter
      */
     public function runCommand(QueueCommand $cmd, InputInterface $input, OutputInterface $output): void
     {
+        if (false === $this->lock() && $this->isLockable()) {
+            throw new \Exception();
+        }
+
         $cmd->setInput($input);
         $cmd->run($input, $output);
     }

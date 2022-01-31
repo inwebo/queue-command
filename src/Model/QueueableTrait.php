@@ -69,6 +69,10 @@ trait QueueableTrait
     }
 
     /**
+     * Will transform a string QueueCommand::$defaultName; in a valid QueueCommand instance.
+     *
+     * Gets the application instance for this command.
+     *
      * @param Application       $app
      * @param \SplQueue<string> $queueCommandNames
      * @param QueueCommand|null $queueCommand

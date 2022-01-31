@@ -43,16 +43,16 @@ abstract class QueueIteratorCommand extends QueueCommand implements
      */
     protected function configureQueueIterator(InputInterface $input, OutputInterface $output): void
     {
-        if (false === $this->lock() && $this->isLockable()) {
-            throw new \Exception();
-        }
-
         $this->commandFactory($this->getApplication(), $this->getQueueCommandNames());
 
         $this->setIterator($this->getQueue());
     }
 
     /**
+     * {@inheritdoc}
+     *
+     *
+     *
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
@@ -60,6 +60,9 @@ abstract class QueueIteratorCommand extends QueueCommand implements
      */
     final protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        if (false === $this->lock() && $this->isLockable()) {
+            throw new \Exception();
+        }
         $this->setInput(ArrayInput::create($input));
         $this->configureQueueIterator($input, $output);
 

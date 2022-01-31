@@ -7,7 +7,7 @@ interface QueueIteratorInterface
     public function configureIterator(): void;
 
     /**
-     * Syntactic Sugar
+     * Syntax sugar
      *
      * Current Inwebo\QueueCommand\Iterator and it's a typed \RecursiveIteratorIterator
      *

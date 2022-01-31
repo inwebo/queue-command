@@ -5,12 +5,14 @@ namespace Inwebo\QueueCommand\Model;
 use Inwebo\QueueCommand\QueueCommand;
 
 /**
- * Syntax sugar, it's an \RecursiveIteratorIterator class.
+ * Syntax sugar, it's a typed \RecursiveIteratorIterator class.
  */
 class Iterator extends \RecursiveIteratorIterator
 {
     /**
-     * Force return type.
+     * {@inheritDoc}
+     *
+     * Force Inwebo\QueueCommand\QueueCommand return type.
      *
      * @return QueueCommand
      */
